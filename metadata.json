@@ -1,0 +1,7 @@
+{
+  "name": "Copy of TreinAí",
+  "description": "A comprehensive mobile-first dashboard for personal trainers to manage students, workouts, and meal plans with AI assistance.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
