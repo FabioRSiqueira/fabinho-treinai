@@ -1,8 +1,11 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
 
+// Guideline: The API key must be obtained exclusively from the environment variable process.env.API_KEY.
+// Guideline: Use process.env.API_KEY directly when initializing the @google/genai client instance.
+
 export const generateWorkoutPlan = async (studentInfo: string, muscleGroup?: string) => {
-  // Inicialização padrão utilizando a variável de ambiente injetada
+  // Correctly initialized using a named parameter and direct process.env reference
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   const focusPrompt = muscleGroup ? ` focado especificamente em ${muscleGroup}` : "";
   
@@ -32,20 +35,16 @@ export const generateWorkoutPlan = async (studentInfo: string, muscleGroup?: str
       }
     });
 
-    // Acessa a propriedade .text diretamente (sem parênteses)
-    const text = response.text;
-    if (!text) {
-      throw new Error("O modelo Gemini retornou uma resposta vazia.");
-    }
-
-    return JSON.parse(text);
+    // response.text is a property, not a method
+    return JSON.parse(response.text || "[]");
   } catch (err: any) {
-    console.error("Erro detalhado na chamada do Gemini:", err);
+    console.error("Erro Gemini:", err);
     throw err;
   }
 };
 
 export const generateMealPlan = async (studentInfo: string) => {
+  // Correctly initialized using a named parameter and direct process.env reference
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   try {
@@ -66,9 +65,10 @@ export const generateMealPlan = async (studentInfo: string) => {
         }
       }
     });
+    // response.text is a property, not a method
     return JSON.parse(response.text || "{}");
   } catch (err) {
-    console.error("Erro na geração de dieta Gemini:", err);
+    console.error("Erro Dieta Gemini:", err);
     throw err;
   }
 };

@@ -50,15 +50,18 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
           <div className="flex items-center gap-3 mb-2">
             <span className="material-symbols-outlined text-primary text-5xl font-bold">fitness_center</span>
           </div>
+          {/* MUDE O NOME DO APP AQUI */}
           <h1 className="text-white text-4xl font-black tracking-tighter">TreinAí</h1>
-          <p className="text-primary font-bold tracking-[0.2em] uppercase text-[10px] mt-2">Professional Fitness Management</p>
+          {/* MUDE O SLOGAN AQUI */}
+          <p className="text-primary font-bold tracking-[0.2em] uppercase text-[10px] mt-2">Gestão Fitness Profissional</p>
         </div>
       </div>
 
       <div className="relative -mt-12 flex flex-1 flex-col rounded-t-[40px] bg-background-light dark:bg-background-dark px-8 pt-10 pb-8 z-20">
         <div className="mb-8">
-          <h2 className="text-[#111817] dark:text-white text-2xl font-bold">Bem-vindo de volta</h2>
-          <p className="text-gray-500 text-sm mt-1">Acesse sua conta para gerenciar seus treinos.</p>
+          {/* MUDE A MENSAGEM DE BOAS-VINDAS AQUI */}
+          <h2 className="text-[#111817] dark:text-white text-2xl font-bold">Acesse sua conta</h2>
+          <p className="text-gray-500 text-sm mt-1">Gerencie seus treinos e alunos em um só lugar.</p>
         </div>
 
         <form className="flex flex-col gap-5 w-full" onSubmit={handleSubmit}>
@@ -112,7 +115,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
         <div className="mt-auto pt-8 text-center">
           <p className="text-gray-400 text-[11px] font-medium uppercase tracking-widest">
-            TreinAí v2.0 &copy; 2024
+            TreinAí v1.1 &copy; 2025
           </p>
         </div>
       </div>

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Student, View } from '../types';
 import { supabase } from '../services/supabase';
@@ -19,6 +20,10 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate, students }) => {
 
   const STUDENT_LIMIT = 5;
   const usagePercentage = Math.min((students.length / STUDENT_LIMIT) * 100, 100);
+  
+  const WHATSAPP_NUMBER = "5519991109852"; 
+  const WHATSAPP_MESSAGE = encodeURIComponent("Olá! Gostaria de fazer o upgrade do meu plano TreinAí para alunos ilimitados via PIX.");
+  const upgradeLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
 
   return (
     <div className="pb-24 animate-in fade-in duration-500">
@@ -55,19 +60,33 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate, students }) => {
               </div>
             </div>
 
-            <div className="space-y-3">
-              <div className="h-2.5 w-full bg-white/5 rounded-full overflow-hidden">
-                <div 
-                  className={`h-full transition-all duration-1000 ease-out shadow-[0_0_15px_rgba(17,212,147,0.3)] ${usagePercentage >= 100 ? 'bg-orange-500' : 'bg-primary'}`}
-                  style={{ width: `${usagePercentage}%` }}
-                ></div>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <div className="h-2.5 w-full bg-white/5 rounded-full overflow-hidden">
+                  <div 
+                    className={`h-full transition-all duration-1000 ease-out shadow-[0_0_15px_rgba(17,212,147,0.3)] ${usagePercentage >= 100 ? 'bg-orange-500' : 'bg-primary'}`}
+                    style={{ width: `${usagePercentage}%` }}
+                  ></div>
+                </div>
+                <div className="flex justify-between items-center">
+                  <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Capacidade do Plano</p>
+                  <p className="text-[9px] font-black text-primary uppercase tracking-widest">
+                    {usagePercentage >= 100 ? '⚠️ Limite Atingido' : `${STUDENT_LIMIT - students.length} vagas livres`}
+                  </p>
+                </div>
               </div>
-              <div className="flex justify-between items-center">
-                <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Capacidade do Plano</p>
-                <p className="text-[9px] font-black text-primary uppercase tracking-widest">
-                  {usagePercentage >= 100 ? '⚠️ Limite Atingido' : `${STUDENT_LIMIT - students.length} vagas livres`}
-                </p>
-              </div>
+
+              {usagePercentage >= 100 && (
+                <a 
+                  href={upgradeLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 w-full bg-primary py-3 rounded-2xl text-[#10221c] text-[10px] font-black uppercase tracking-widest animate-pulse"
+                >
+                  <span className="material-symbols-outlined text-base">rocket_launch</span>
+                  Liberar Alunos Ilimitados
+                </a>
+              )}
             </div>
           </div>
           <span className="absolute -right-8 -bottom-8 material-symbols-outlined text-[160px] text-primary/5 font-bold rotate-12 select-none pointer-events-none">fitness_center</span>
@@ -76,12 +95,14 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate, students }) => {
         <section className="grid grid-cols-3 gap-4">
           <button 
             onClick={() => onNavigate('add-student')}
-            className={`flex flex-col items-center justify-center p-5 bg-white dark:bg-surface-dark rounded-[32px] border border-gray-100 dark:border-gray-800 shadow-sm transition-all hover:-translate-y-1 active:scale-95 group ${students.length >= STUDENT_LIMIT ? 'opacity-40 grayscale pointer-events-none' : ''}`}
+            className={`flex flex-col items-center justify-center p-5 bg-white dark:bg-surface-dark rounded-[32px] border border-gray-100 dark:border-gray-800 shadow-sm transition-all hover:-translate-y-1 active:scale-95 group ${students.length >= STUDENT_LIMIT ? 'border-orange-500/30 ring-1 ring-orange-500/20' : ''}`}
           >
-            <div className="size-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-3 group-hover:bg-primary group-hover:text-[#10221c] transition-colors">
-              <span className="material-symbols-outlined text-[24px] filled">person_add</span>
+            <div className={`size-12 rounded-2xl flex items-center justify-center mb-3 transition-colors ${students.length >= STUDENT_LIMIT ? 'bg-orange-500/10 text-orange-500' : 'bg-primary/10 text-primary group-hover:bg-primary group-hover:text-[#10221c]'}`}>
+              <span className="material-symbols-outlined text-[24px] filled">{students.length >= STUDENT_LIMIT ? 'lock' : 'person_add'}</span>
             </div>
-            <span className="text-[9px] font-black uppercase text-gray-400 tracking-widest text-center">Cadastro</span>
+            <span className="text-[9px] font-black uppercase text-gray-400 tracking-widest text-center">
+              {students.length >= STUDENT_LIMIT ? 'Upgrade' : 'Cadastro'}
+            </span>
           </button>
           
           <button 
